@@ -6,10 +6,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render((
-  // <React.StrictMode>
-  //   <App />
-  // </React.StrictMode>,
-  // document.getElementById('root')
 
   <BrowserRouter>
     <App /> {/* The various pages will be displayed by the `Main` component. */}
