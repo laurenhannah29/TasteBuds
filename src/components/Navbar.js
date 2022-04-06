@@ -8,8 +8,13 @@ const Navbar = () => {
             <li>
                 <Link to="/">Home</Link>
             </li>
+
             <li>
                 <Link to="/profile">Profile</Link>
+            </li>
+
+            <li>
+                <Link to="/saved">Saved</Link>
             </li>
 
             {/* Maybe some logic to determine what is in here such logout or login */}
