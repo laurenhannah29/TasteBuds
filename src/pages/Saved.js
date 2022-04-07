@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { SavedPost } from '../components/SavedPost';
 
 const Saved = () => {
     const [saves, setSaves] = useState([]);
@@ -13,10 +14,18 @@ const Saved = () => {
             })
     }, []);
 
-    console.log(saves);
+    function renderSaved(saved) {
+        return (
+            <SavedPost image={saved["image"]} caption={saved["caption"]} />
+        )
+    }
+
     return (
         <div>
-            Saved page
+            <h1>Saved page</h1>
+            <div>
+                {saves.map((saved) => renderSaved(saved))}
+            </div>
         </div>
 
     );
