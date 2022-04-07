@@ -74,7 +74,11 @@ def login():  # login functionality with flask-login
         # the hash in database. If a database were to be comprised, the adversaries
         # don't have the actual password all they would have is the hash which to them
         # looks like a lot of random characters which they can't decode
-        if invalid_username or not check_password_hash(user_data.password, password):
+        if invalid_username:
+            return render_template(
+                "login.html", is_login_page=False, invalid_username_or_password=True
+            )
+        if not check_password_hash(user_data.password, password):
             return render_template(
                 "login.html", is_login_page=True, invalid_username_or_password=True
             )
@@ -88,13 +92,14 @@ def signup():  # user can create a username and password and then login to the w
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
+        email = request.form.get("email")
         user_data = Users.query.filter_by(username=username).first()
         user_exists = user_data is not None
         if not user_exists:
             # you should not store passwords in database
             # we should store the password hash instead within the database
             password_hash = generate_password_hash(password, method="sha256")
-            user = Users(username=username, password=password_hash, email="email")
+            user = Users(username=username, password=password_hash, email=email)
             # db.session.begin()
             db.session.add(user)
             db.session.commit()
