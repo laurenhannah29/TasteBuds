@@ -1,0 +1,38 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+
+<body>
+    <div class="entry">
+        {% if is_login_page %}
+        <h1>Log in</h1>
+        {% if invalid_username_or_password %}
+        <div class="error">Invalid Username or Password</div>
+        {% endif %}
+        <form method="POST" action="/">
+            {% else %}
+            <h1>Sign up</h1>
+            {% if user_exists %}
+            <div class="error">Username is already taken, please choose a new one</div>
+            {% endif %}
+            <form method="POST" action="/signup">
+                {% endif %}
+                <input type="text" name="username" placeholder="Username" />
+                <input type="password" name="password" placeholder="Password" />
+                <input type="text" name="email" placeholder="Email ID" />
+
+                {% if is_login_page %}
+                <input type="submit" value="Login" />
+            </form>
+            <a href="/signup">Sign Up</a>
+            {% else %}
+            <input type="submit" value="Sign Up" />
+        </form>
+        <a href="/">Log in</a>
+        {% endif %}
+    </div>
+</body>
+
+</html>
