@@ -1,7 +1,8 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template
-from utils.models import db, User
+import flask
+from utils.models import db, User, Posts
 
 load_dotenv(find_dotenv())
 
@@ -24,7 +25,7 @@ with app.app_context():
 # by create-react-app/npm run build.
 # By doing this, we make it so you can paste in all your old app routes
 # from Milestone 2 without interfering with the functionality here.
-bp = Blueprint(
+bp = flask.Blueprint(
     "bp",
     __name__,
     template_folder="./static/react",
@@ -33,13 +34,45 @@ bp = Blueprint(
 # route for serving React page
 @bp.route("/")
 def index():
-    # NB: DO NOT add an "index.html" file in your normal templates folder
-    # Flask will stop serving this React page correctly
-    return render_template("index.html")
+    return flask.render_template("index.html")
 
 
 app.register_blueprint(bp)
 
-app.run(
-    host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", "8080")), debug=True
-)
+
+@app.route("/post", methods=["POST"])
+def post():
+    data = flask.request.form
+    image = data.get("image")
+    caption = data.get("caption")
+
+    new_post = Posts(
+        image=image,
+        caption=caption,
+    )
+
+    db.session.add(new_post)
+    db.session.commit()
+    return flask.redirect("index")
+
+
+@app.route("/get_post")
+def foo():
+    post = Posts.query.filter_by.all()
+    return flask.jsonify(
+        [
+            {
+                "image": Posts.image,
+                "caption": Posts.caption,
+            }
+            for Posts in post
+        ]
+    )
+
+
+if __name__ == "__main__":
+    app.run(
+        host=os.getenv("IP", "0.0.0.0"),
+        # port = int(os.getenv("PORT", 8080)),
+        debug=True,
+    )

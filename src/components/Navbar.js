@@ -17,6 +17,10 @@ const Navbar = () => {
             <li>
                 <Link to="/signup">Login</Link>
             </li>
+
+            <li>
+                <Link to="/NewPost">Create a Post!!!</Link>
+            </li>
         </div>
     )
 }
