@@ -1,8 +1,7 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template
-import flask
-from matplotlib import image
+from utils.create_post import create_post
 from utils.models import db, User, Posts
 
 load_dotenv(find_dotenv())
@@ -22,11 +21,7 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# set up a separate route to serve the index.html file generated
-# by create-react-app/npm run build.
-# By doing this, we make it so you can paste in all your old app routes
-# from Milestone 2 without interfering with the functionality here.
-bp = flask.Blueprint(
+bp = Blueprint(
     "bp",
     __name__,
     template_folder="./static/react",
@@ -35,68 +30,14 @@ bp = flask.Blueprint(
 # route for serving React page
 @bp.route("/")
 def index():
-    return flask.render_template("index.html")
+    return render_template("index.html")
 
 
 app.register_blueprint(bp)
+app.register_blueprint(create_post)
 
-
-@app.route("/post", methods=["POST"])
-def post():
-    data = flask.request.form
-    image = data.get("image")
-    caption = data.get("caption")
-
-    new_post = Posts(
-        image=image,
-        caption=caption,
-    )
-
-    db.session.add(new_post)
-    db.session.commit()
-    return flask.redirect("index")
-
-
-@app.route("/save_post", methods=["POST"])
-def save_post():
-    data = flask.request.form
-    # user_ratings = Posts.query.filter_by.all()
-    # new_post = [
-    #     Posts(
-    #         # user_id=0,
-    #         image=p["image"],
-    #         caption=p["caption"],
-    #     )
-    #     for p in data
-    # ]
-    new_post = Posts(
-        # id=5,
-        user_id=0,
-        image="myImage",
-        caption="caption",
-    )
-    db.session.add(new_post)
-    db.session.commit()
-    return flask.jsonify("Post successfully uploaded")
-
-
-@app.route("/get_post")
-def foo():
-    post = Posts.query.all()
-    return flask.jsonify(
-        [
-            {
-                "image": Posts.image,
-                "caption": Posts.caption,
-            }
-            for Posts in post
-        ]
-    )
-
-
-if __name__ == "__main__":
-    app.run(
-        host=os.getenv("IP", "0.0.0.0"),
-        # port = int(os.getenv("PORT", 8080)),
-        debug=True,
-    )
+app.run(
+    host=os.getenv("IP", "0.0.0.0"),
+    port=int(os.getenv("PORT", 8080)),
+    debug=True,
+)
