@@ -1,7 +1,8 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template
-from utils.models import db, User
+from utils.models import db, Users
+from utils.saved import saved
 
 load_dotenv(find_dotenv())
 
@@ -32,6 +33,9 @@ bp = Blueprint(
 
 # route for serving React page
 @bp.route("/")
+@bp.route("/signup")
+@bp.route("/profile")
+@bp.route("/saved")
 def index():
     # NB: DO NOT add an "index.html" file in your normal templates folder
     # Flask will stop serving this React page correctly
@@ -39,6 +43,7 @@ def index():
 
 
 app.register_blueprint(bp)
+app.register_blueprint(saved)
 
 app.run(
     host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", "8080")), debug=True

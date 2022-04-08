@@ -5,7 +5,7 @@ from sqlalchemy import event
 db = SQLAlchemy()
 
 
-class User(UserMixin, db.Model):
+class Users(UserMixin, db.Model):
     """
     creates User table in db
     each user is given an id(primary key) and user which is their display name
@@ -13,6 +13,8 @@ class User(UserMixin, db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100))
+    password = db.Column(db.String(100))
+    email = db.Column(db.String(100))
 
 
 class Posts(db.Model):
