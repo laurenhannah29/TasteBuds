@@ -1,8 +1,10 @@
 import os
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template
-from utils.models import db, Users
+from utils.models import db
 from utils.saved import saved
+from utils.create_post import create_post
+
 
 load_dotenv(find_dotenv())
 
@@ -21,10 +23,6 @@ db.init_app(app)
 with app.app_context():
     db.create_all()
 
-# set up a separate route to serve the index.html file generated
-# by create-react-app/npm run build.
-# By doing this, we make it so you can paste in all your old app routes
-# from Milestone 2 without interfering with the functionality here.
 bp = Blueprint(
     "bp",
     __name__,
@@ -37,14 +35,15 @@ bp = Blueprint(
 @bp.route("/profile")
 @bp.route("/saved")
 def index():
-    # NB: DO NOT add an "index.html" file in your normal templates folder
-    # Flask will stop serving this React page correctly
     return render_template("index.html")
 
 
 app.register_blueprint(bp)
 app.register_blueprint(saved)
+app.register_blueprint(create_post)
 
 app.run(
-    host=os.getenv("IP", "0.0.0.0"), port=int(os.getenv("PORT", "8080")), debug=True
+    host=os.getenv("IP", "0.0.0.0"),
+    port=int(os.getenv("PORT", 8080)),
+    debug=True,
 )
