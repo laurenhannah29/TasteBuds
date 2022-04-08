@@ -1,12 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import { useState, useEffect } from 'react';
+import { Post } from '../components/Post.js';
 
 const Home = () => {
+    const [val, setVal] = useState([])
     const posts = val.map(
         (post, i) => <Post
-            image={Post.image}
-            caption={Post.caption}
+            image={post.image}
+            caption={post.caption}
         />);
 
     useEffect(() => {

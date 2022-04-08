@@ -1,62 +1,53 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ImageUploader from "react-images-upload";
+import ReactDOM from "react-dom";
 
-const NewPost = () => {
-    function onClickSave() {
-        fetch('/save_post', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(val),
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-            });
-    }
+class NewPost extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { pictures: [] };
-        this.onDrop = this.onDrop.bind(this);
+        this.state = {
+            image: null
+        };
+
+        this.onImageChange = this.onImageChange.bind(this);
     }
 
-    onDrop(pictureFiles, pictureDataURLs) {
-        this.setState({
-            pictures: this.state.pictures.concat(pictureFiles)
-        });
+    onImageChange = event => {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0];
+            this.setState({
+                image: URL.createObjectURL(img)
+            });
+        }
+    };
+
+
+    render() {
+        return (
+            <div>
+                <div>
+                    <div>
+                        <form method="POST" action="/save_post">
+                            <img src={this.state.image} />
+                            <div>
+                                <input
+                                    name="caption"
+                                    type="text"
+                                    value={this.state.value}
+                                    onChange={this.handleChange}
+                                />
+                            </div>
+                            <h1>Select Image</h1>
+                            <input type="file" name="myImage" onChange={this.onImageChange} />
+                            <button type="submit">Post!</button>
+                        </form>
+
+                    </div>
+
+                </div>
+            </div>
+        );
     }
-
-    return (
-        <div>
-            Create a Post!!
-
-            <ImageUploader
-                withIcon={false}
-                withPreview={true}
-                buttonText="Choose images"
-                onChange={this.onDrop}
-                imgExtension={[".jpeg", ".gif", ".png", ".gif"]}
-                maxFileSize={5242880}
-            />
-
-            <label>Caption
-                <input
-                    type="text"
-                    value={this.state.value}
-                    onChange={this.handleChange}
-                />
-            </label>
-
-            <button onClick={onClickSave}>Save Post</button>
-
-        </div>
-    );
-};
-
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
-
+}
 export default NewPost;

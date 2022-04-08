@@ -2,6 +2,7 @@ import os
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template
 import flask
+from matplotlib import image
 from utils.models import db, User, Posts
 
 load_dotenv(find_dotenv())
@@ -56,9 +57,32 @@ def post():
     return flask.redirect("index")
 
 
+@app.route("/save_post", methods=["POST"])
+def save_post():
+    data = flask.request.form
+    # user_ratings = Posts.query.filter_by.all()
+    # new_post = [
+    #     Posts(
+    #         # user_id=0,
+    #         image=p["image"],
+    #         caption=p["caption"],
+    #     )
+    #     for p in data
+    # ]
+    new_post = Posts(
+        # id=5,
+        user_id=0,
+        image="myImage",
+        caption="caption",
+    )
+    db.session.add(new_post)
+    db.session.commit()
+    return flask.jsonify("Post successfully uploaded")
+
+
 @app.route("/get_post")
 def foo():
-    post = Posts.query.filter_by.all()
+    post = Posts.query.all()
     return flask.jsonify(
         [
             {
