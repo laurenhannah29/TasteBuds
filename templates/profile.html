@@ -1,0 +1,35 @@
+<html>
+
+<head>
+	<!-- <link rel="stylesheet" href={{ url_for('static', filename='style.css' ) }} /> -->
+</head>
+
+<body>
+
+	<div class="feedback">
+		<!-- <form method="POST" action="/rate">
+			<p>
+				<textarea id="photo" name="photo" placeholder="Leave a Photo"></textarea>
+				<textarea id="profile_name" name="profile_name" placeholder="Leave a Name"></textarea>
+				<textarea id="bio" name="comment" placeholder="Leave a Bio"></textarea>
+			</p>
+			<p>
+				<input type="submit" value="Submit" />
+			</p>
+		</form> -->
+
+		<h2>Profile Stuff</h2>
+		{% for profile in profile_info %}
+		<div>
+			<!-- <p>Photo: {{profile.photo}}</p> -->
+			<p>Name: {{profile.username}}</p>
+			<p>Bio: {{profile.bio}}</p>
+		</div>
+
+	</div>
+	</div>
+	{% endfor %}
+	<a href="/EditProfile">Edit Profile</a> </div>
+</body>
+
+</html>

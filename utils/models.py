@@ -15,6 +15,8 @@ class Users(UserMixin, db.Model):
     username = db.Column(db.String(120))
     password = db.Column(db.String(100))
     email = db.Column(db.String(100))
+    bio = db.Column(db.String())
+    # profile_picture
 
     # def __init__(self, username, password, email):
     #     self.username = username

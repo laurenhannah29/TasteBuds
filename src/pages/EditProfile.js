@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import {useState, useEffect} from 'react';
-import {Profile} from './Profile.js';
+// import logo from './logo.svg';
+// import './App.css';
+import { useState, useEffect } from 'react';
+import { Profile } from '../components/Profile.js';
 
-function App() {
-    const [val, setVal] = useState([])
+function EditProfile() {
+  const [val, setVal] = useState([])
 
   function handlePhotoChange(i, e) {
     const newProfile = val.slice();
@@ -40,18 +40,18 @@ function App() {
   //   }
 
   const profile = val.map(
-    (profile, i) => <Profile 
+    (profile, i) => <Profile
       photo={profile.photo}
       profile_name={profile.profile_name}
       bio={profile.bio}
-      
+
       // onDelete={() => handleDelete(i)}
       onPhoto={(e) => handlePhotoChange(i, e)}
       onName={(e) => handleNameChange(i, e)}
       onBio={(e) => handleBioChange(i, e)}
-      
+
     />);
-  
+
   useEffect(() => {
     fetch('/get_profile', {
       method: 'GET',
@@ -67,7 +67,7 @@ function App() {
 
 
 
-
+  console.log("WE PROFILING")
   console.log(val);
   return (
     <div className="App">
@@ -76,6 +76,6 @@ function App() {
       <button onClick={onClickSave}>Save Profile</button>
     </div>
   );
-  }
+}
 
-export default App;
+export default EditProfile;

@@ -6,6 +6,7 @@ from utils.models import db, Users
 from utils.saved import saved
 from utils.auth import auth
 from utils.create_post import create_post
+from utils.profile import profile
 
 
 load_dotenv(find_dotenv())
@@ -43,8 +44,8 @@ bp = Blueprint(
 
 
 @bp.route("/", methods=["POST", "GET"])
-@bp.route("/profile")
 @bp.route("/saved")
+@bp.route("/EditProfile")
 def index():
     return render_template("index.html")
 
@@ -53,6 +54,7 @@ app.register_blueprint(bp)
 app.register_blueprint(saved)
 app.register_blueprint(auth)
 app.register_blueprint(create_post)
+app.register_blueprint(profile)
 
 
 app.run(
