@@ -1,14 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Post } from '../components/Post.js';
+import { Post } from '../components/Post.js'; //create post page
 
 const Home = () => {
-    const [val, setVal] = useState([])
-    const posts = val.map(
-        (post, i) => <Post
-            image={post.image}
-            caption={post.caption}
-        />);
+    const [posts, setPosts] = useState([])
+    // const posts = val.map(
+    //     (post, i) => <Post
+    //         image={post.image}
+    //         caption={post.caption}
+    //     />);
 
     useEffect(() => {
         fetch('/get_post', {
@@ -19,14 +19,24 @@ const Home = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                setVal(data);
+                setPosts(data);
             });
     }, []);
+
+    function renderPost(post) {
+        return (
+            <div>
+                <img src={post["image"]} />
+                <p>{post["caption"]}</p>
+            </div>
+        )
+    }
+    console.log(posts);
 
     return (
         <div>
             Home page
-            {posts}
+            {posts.map((post) => renderPost(post))}
         </div>
 
     );
