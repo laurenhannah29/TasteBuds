@@ -29,3 +29,17 @@ def save_post():
     db.session.add(new_post)
     db.session.commit()
     return jsonify("Post successfully uploaded")
+
+
+@create_post.route("/get_post", methods=["GET"])
+def get_post():
+    post = Posts.query.all()
+    return jsonify(
+        [
+            {
+                "image": Posts.image,
+                "caption": Posts.caption,
+            }
+            for Posts in post
+        ]
+    )

@@ -27,7 +27,7 @@ class NewPost extends React.Component {
                 <div>
                     <div>
                         <form method="POST" action="/save_post">
-                            <img src={this.state.image} />
+                            <img src={this.state.image} name="myImage" />
                             <div>
                                 <input
                                     name="caption"
@@ -37,7 +37,7 @@ class NewPost extends React.Component {
                                 />
                             </div>
                             <h1>Select Image</h1>
-                            <input type="file" name="myImage" onChange={this.onImageChange} />
+                            <input type="file" onChange={this.onImageChange} />
                             <button type="submit">Post!</button>
                         </form>
 
