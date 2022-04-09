@@ -11,8 +11,6 @@ def get_profile():
     """return json data of the user information"""
     # profile_info = Rating.query.filter_by(username=current_user.username).all()
 
-    print(current_user.id, "get_profile id")
-
     profile_info = Users.query.filter_by(id=current_user.id)
     return flask.jsonify(
         [
@@ -35,6 +33,8 @@ def save_profile():
     bio = data[0]["bio"]
     profile_name = data[0]["profile_name"]
 
+    user_profile = Users.query.filter_by(id=current_user.id).first()
+
     # TODO add profile picture
     new_profile = Users(
         id=user_profile.id,
@@ -56,8 +56,6 @@ def rate():
     """
     adds to profile table that does not exist
     """
-
-    print(current_user.id, "rate id")
 
     data = flask.request.form
     # photo = data.get("photo")
