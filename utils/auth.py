@@ -1,18 +1,14 @@
-from flask import Flask, Blueprint, render_template, request
-from flask_sqlalchemy import SQLAlchemy
-from dotenv import find_dotenv, load_dotenv
+from flask import Flask, Blueprint, render_template, request, jsonify, url_for
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import (
-    LoginManager,
+    user_loader,
     login_user,
     login_required,
     current_user,
     logout_user,
 )
 from utils.models import db, Users
-from flask import Flask, Blueprint, render_template, url_for
-from utils.models import db
 
 
 auth = Blueprint("auth", __name__)
@@ -78,3 +74,18 @@ def signup():
 def logout():  # logout functionality with flask-login
     logout_user()
     return render_template("login.html", is_login_page=True)
+
+
+@auth.route("/is_authenticated")
+def is_authenticated():
+    """
+    returns if user is authenticated and username if they are authenticated
+    """
+    logged_in = current_user.is_authenticated
+    if logged_in:
+        username = user_loader(current_user.id)
+    else:
+        username = None
+    return jsonify(
+        {"is_authenticated": current_user.is_authenticated, "user": username}
+    )

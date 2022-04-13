@@ -7,6 +7,7 @@ profile = flask.Blueprint("profile", __name__)
 
 
 @profile.route("/get_profile")
+@login_required
 def get_profile():
     """return json data of the user information"""
     # profile_info = Rating.query.filter_by(username=current_user.username).all()
@@ -25,6 +26,7 @@ def get_profile():
 
 
 @profile.route("/save_profile", methods=["POST"])
+@login_required
 def save_profile():
     """
     updates profile table?
@@ -52,6 +54,7 @@ def save_profile():
 
 
 @profile.route("/profile", methods=["POST", "GET"])
+@login_required
 def rate():
     """
     adds to profile table that does not exist
@@ -75,6 +78,7 @@ def rate():
 
 
 @profile.route("/index")
+@login_required
 def index():
     """
     Displays the profile information

@@ -10,7 +10,7 @@ saved = Blueprint("saved", __name__)
 
 
 @saved.route("/load_saved", methods=["POST", "GET"])
-# @login_required
+@login_required
 def load_saved():
     """
     queries the saved posts of the logged in user

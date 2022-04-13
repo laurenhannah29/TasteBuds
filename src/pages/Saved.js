@@ -3,14 +3,21 @@ import { SavedPost } from '../components/SavedPost';
 
 const Saved = () => {
     const [saves, setSaves] = useState([]);
-    const [user, setUser] = useState([]);
+    const [username, setUsername] = useState([]);
+    const [authenticated, setAuthenticated] = useState([]);
 
     useEffect(() => {
         fetch("/load_saved")
             .then(response => response.json())
             .then(data => {
                 setSaves(data["saves"]);
-                setUser(data["user"]);
+                //setUser(data["user"]);
+            })
+        fetch("/is_authenticated")
+            .then(response => response.json())
+            .then(data => {
+                setAuthenticated(data["is_authenticated"])
+                setUsername(data["username"])
             })
     }, []);
 
@@ -20,6 +27,7 @@ const Saved = () => {
         )
     }
 
+    console.log(username, authenticated);
     return (
         <div>
             <h1>Saved page</h1>
