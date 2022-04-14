@@ -26,6 +26,10 @@ const Saved = () => {
             <div>
                 {saves.map((saved) => renderSaved(saved))}
             </div>
+
+            <form method="POST" action="/upload">
+                <button type="submit">Upload</button>
+            </form>
         </div>
 
     );
