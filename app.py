@@ -7,6 +7,7 @@ from utils.saved import saved
 from utils.auth import auth
 from utils.create_post import create_post
 from utils.profile import profile
+from utils.nutrition import nutrition
 
 
 load_dotenv(find_dotenv())
@@ -55,6 +56,7 @@ app.register_blueprint(saved)
 app.register_blueprint(auth)
 app.register_blueprint(create_post)
 app.register_blueprint(profile)
+app.register_blueprint(nutrition)
 
 
 app.run(
