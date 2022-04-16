@@ -23,21 +23,10 @@ app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-# AWS_S3_CREDS = {
-#     "aws_access_key_id": "AKIATJ4NIX6YIMZ75S4M",
-#     "aws_secret_access_key": "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",
-# }
 
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
-
-
-# def s3_client():
-#     session = boto3.session.Session()
-#     client = session.client("s3", **AWS_S3_CREDS)
-
-#     return client
 
 
 @login_manager.user_loader

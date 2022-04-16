@@ -1,44 +1,50 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-class NewPost extends React.Component {
+class NewPost extends Component {
 
     // constructor(props) {
     //     super(props);
     //     this.state = {
-    //         image: null
+    //         image: null,
+    //         caption: ""
     //     };
 
     //     this.onImageChange = this.onImageChange.bind(this);
+    //     this.onCaptionChange = this.onCaptionChange.bind(this);
     // }
 
     state = {
-        image: null
+        image: null,
+        caption: ""
     };
 
     onImageChange = event => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
             console.log(img);
-            this.setState({
-                image: URL.createObjectURL(img)
-            });
+            this.setState({ image: URL.createObjectURL(img) });
             console.log(this.state.value)
 
         }
     };
 
-    onClickPost = () => {
-        const blob_image = new Blob([this.state.image], { type: 'text/plain' })
-        const formData = new FormData();
-        formData.append(
-            "image",
-            blob_image,
-            this.state.name
-        );
+    onCaptionChange = event => {
+        this.setState({ caption: event.target.value })
+    };
 
-        fetch("/upload", {
+    onClickPost = () => {
+        const blob_image = new Blob([this.state.image], { type: 'text/plain' });
+        const blob_caption = new Blob([this.state.caption], { type: 'text/plain' });
+        const formData = new FormData();
+        formData.append("image", blob_image, this.state.name);
+        formData.append("caption", blob_caption, "caption")
+
+        console.log(JSON.stringify({ image: this.state.image, caption: this.state.caption }))
+
+        fetch("/save_post", {
             method: "POST",
-            body: formData
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ image: this.state.image, caption: this.state.caption })
         });
     }
 
@@ -48,20 +54,35 @@ class NewPost extends React.Component {
             <div>
                 <div>
                     <div>
-                        <form method="POST" action="/save_post">
+                        {/* <form method="POST" action="/save_post">
                             <img src={this.state.image} name="myImage" />
                             <div>
                                 <input
                                     name="caption"
                                     type="text"
                                     value={this.state.value}
-                                    onChange={this.handleChange}
+                                    onChange={this.onCaptionChange}
+                                    accept='image/*'
                                 />
                             </div>
                             <h1>Select Image</h1>
                             <input type="file" onChange={this.onImageChange} />
                             <button type="submit" onClick={this.onClickPost}>Post!</button>
-                        </form>
+                        </form> */}
+
+                        <img src={this.state.image} name="myImage" />
+                        <div>
+                            <input
+                                name="caption"
+                                type="text"
+                                value={this.state.value}
+                                onChange={this.onCaptionChange}
+                                accept='image/*'
+                            />
+                        </div>
+                        <h1>Select Image</h1>
+                        <input type="file" onChange={this.onImageChange} />
+                        <button type="submit" onClick={this.onClickPost}>Post!</button>
 
                     </div>
 

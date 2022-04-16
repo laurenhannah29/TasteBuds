@@ -1,16 +1,22 @@
 # pylint: disable=trailing-whitespace, disable=maybe-no-member, C0116, C0103, C0114
+import os
 from flask import Blueprint, request, redirect, url_for, flash, render_template, jsonify
 from flask_login import (
     login_user,
     login_required,
     logout_user,
 )
-from utils.models import db, Posts
+from dotenv import load_dotenv
 import boto3
+import urllib3
+
+from utils.models import db, Posts
+
+load_dotenv()
 
 AWS_S3_CREDS = {
-    "aws_access_key_id": "AKIATJ4NIX6YIMZ75S4M",
-    "aws_secret_access_key": "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",
+    "aws_access_key_id": os.getenv("AWS_ACCESS_KEY_ID"),
+    "aws_secret_access_key": os.getenv("AWS_SECRET_ACESS_KEY"),
 }
 
 create_post = Blueprint("create_post", __name__)
@@ -30,6 +36,14 @@ def save_post():
     It adds the data to the database
     """
     data = request.form
+
+    print(request.json)
+    print(request.json["image"])
+    print(request.json["caption"])
+
+    image_url = request.json["image"]
+    caption = request.json["caption"]
+
     image = data.get("myImage")
     caption = data.get("caption")
 
@@ -43,12 +57,9 @@ def save_post():
 
     ###############################################################################################
 
-    print("postingingigningingingingign")
     print()
-    # object = open(
-    #     "/home/sage/tastebuds/p1m3-starter-code/static/react/batman.png", "rb"
-    # )
-    # object = open(image, "rb")
+    # object = open("/home/sage/tastebuds/p1m3-starter-code/static/react/batman.png", "rb")
+    object = urllib3.request.urlopen(image_url, "rb")
 
     # client = s3_client()
     # upload_file_response = client.put_object(
