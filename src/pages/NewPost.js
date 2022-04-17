@@ -2,29 +2,30 @@ import React, { Component } from 'react';
 
 class NewPost extends Component {
 
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         image: null,
-    //         caption: ""
-    //     };
+    constructor(props) {
+        super(props);
+        this.state = {
+            image: null,
+            file: null,
+            caption: ""
+        };
 
-    //     this.onImageChange = this.onImageChange.bind(this);
-    //     this.onCaptionChange = this.onCaptionChange.bind(this);
-    // }
+        this.onImageChange = this.onImageChange.bind(this);
+        this.onCaptionChange = this.onCaptionChange.bind(this);
+    }
 
-    state = {
-        image: null,
-        caption: ""
-    };
+    // state = {
+    //     image: null,
+    //     caption: ""
+    // };
 
     onImageChange = event => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
             console.log(img);
+            this.setState({ file: img });
             this.setState({ image: URL.createObjectURL(img) });
             console.log(this.state.value)
-
         }
     };
 
@@ -33,18 +34,23 @@ class NewPost extends Component {
     };
 
     onClickPost = () => {
-        const blob_image = new Blob([this.state.image], { type: 'text/plain' });
+        const blob_image = new Blob([this.state.image], { type: "application/octet-stream" });
         const blob_caption = new Blob([this.state.caption], { type: 'text/plain' });
+
+
         const formData = new FormData();
         formData.append("image", blob_image, this.state.name);
-        formData.append("caption", blob_caption, "caption")
+        formData.append("caption", blob_caption, "caption");
+        formData.append("file", this.state.file);
 
-        console.log(JSON.stringify({ image: this.state.image, caption: this.state.caption }))
+        console.log(blob_image);
+        console.log(JSON.stringify({ image: this.state.image, caption: this.state.caption, file: this.state.file }));
 
         fetch("/save_post", {
             method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ image: this.state.image, caption: this.state.caption })
+            // headers: { 'Content-Type': 'application/json' },
+            body: formData
+            // body: JSON.stringify({ image: this.state.image, caption: this.state.caption })
         });
     }
 
@@ -75,7 +81,7 @@ class NewPost extends Component {
                             <input
                                 name="caption"
                                 type="text"
-                                value={this.state.value}
+                                value={this.state.caption}
                                 onChange={this.onCaptionChange}
                                 accept='image/*'
                             />

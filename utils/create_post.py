@@ -8,7 +8,7 @@ from flask_login import (
 )
 from dotenv import load_dotenv
 import boto3
-import urllib3
+import urllib
 
 from utils.models import db, Posts
 
@@ -16,7 +16,7 @@ load_dotenv()
 
 AWS_S3_CREDS = {
     "aws_access_key_id": os.getenv("AWS_ACCESS_KEY_ID"),
-    "aws_secret_access_key": os.getenv("AWS_SECRET_ACESS_KEY"),
+    "aws_secret_access_key": os.getenv("AWS_SECRET_ACCESS_KEY"),
 }
 
 create_post = Blueprint("create_post", __name__)
@@ -37,34 +37,36 @@ def save_post():
     """
     data = request.form
 
-    print(request.json)
-    print(request.json["image"])
-    print(request.json["caption"])
+    # print(request.json)
+    # print(request.json["image"])
+    # print(request.json["caption"])
 
-    image_url = request.json["image"]
-    caption = request.json["caption"]
+    # i = open(request.files["image"], "rb")
 
-    image = data.get("myImage")
-    caption = data.get("caption")
+    # image_url = request.json["image"]
+    # caption = request.json["caption"]
 
-    new_post = Posts(
-        user_id=0,
-        image=image,
-        caption=caption,
-    )
+    # image = data.get("myImage")
+    # caption = data.get("caption")
+
+    # new_post = Posts(
+    #     user_id=0,
+    #     image=image,
+    #     caption=caption,
+    # )
     # db.session.add(new_post)
     # db.session.commit()
 
     ###############################################################################################
-
     print()
-    # object = open("/home/sage/tastebuds/p1m3-starter-code/static/react/batman.png", "rb")
-    object = urllib3.request.urlopen(image_url, "rb")
+    print(request.files["file"])
+    print()
 
-    # client = s3_client()
-    # upload_file_response = client.put_object(
-    #     Body=object, Bucket="swe-tastebuds", Key="key"
-    # )
+    file = request.files["file"].read()
+    print(file)
+
+    client = s3_client()
+    client.put_object(Body=file, Bucket="swe-tastebuds", Key="key")
 
     return jsonify("Post successfully uploaded")
 
