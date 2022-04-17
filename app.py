@@ -1,6 +1,11 @@
 import os
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, Blueprint, render_template, request
+from flask import Flask, Blueprint, render_template, request, url_for, current_app
+from flask_mail import Mail, Message
+
+# from flaskext.mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+
 from flask_sqlalchemy import SQLAlchemy
 from dotenv import find_dotenv, load_dotenv
 from werkzeug.utils import redirect
@@ -14,13 +19,19 @@ from flask_login import (
 )
 from utils.models import db, Users
 
+app = Flask(__name__)
+app.config.from_pyfile("config.cfg")
+
+mail = Mail(app)
+
+s = URLSafeTimedSerializer("Thisisasecret!")
+
 load_dotenv(find_dotenv())
 
 uri = os.getenv("DATABASE_URL")
 if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
-app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
@@ -93,6 +104,18 @@ def signup():  # user can create a username and password and then login to the w
         username = request.form.get("username")
         password = request.form.get("password")
         email = request.form.get("email")
+        token = s.dumps(email, salt="email-confirm")
+
+        msg = Message(
+            "Confirm Email", sender="ClassiBeatz.info@gmail.com", recipients=[email]
+        )
+
+        link = url_for("confirm_email", token=token, _external=True)
+
+        msg.body = "Your link is {}".format(link)
+
+        mail.send(msg)
+
         user_data = Users.query.filter_by(username=username).first()
         user_exists = user_data is not None
         if not user_exists:
@@ -103,11 +126,22 @@ def signup():  # user can create a username and password and then login to the w
             # db.session.begin()
             db.session.add(user)
             db.session.commit()
-            return render_template("login.html", is_login_page=True)
+            # return '<h1>The email you entered is {}. The token is {}</h1>'.format(email, token)
+
+            return render_template("email.html")
         return render_template(
             "login.html", is_login_page=False, user_exists=user_exists
         )
     return render_template("login.html", is_login_page=False)
+
+
+@app.route("/confirm_email/<token>")
+def confirm_email(token):
+    try:
+        email = s.loads(token, salt="email-confirm", max_age=3600)
+    except SignatureExpired:
+        return "<h1>The token is expired!</h1>"
+    return render_template("login.html", token_success=True, is_login_page=True)
 
 
 @app.route("/TasteBuds", methods=["GET", "POST"])
