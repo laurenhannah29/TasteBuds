@@ -8,7 +8,7 @@ from flask_login import (
 )
 from dotenv import load_dotenv
 import boto3
-import urllib
+import uuid
 
 from utils.models import db, Posts
 
@@ -35,41 +35,34 @@ def save_post():
     This takes is used on the create post page.
     It adds the data to the database
     """
-    data = request.form
 
-    # print(request.json)
-    # print(request.json["image"])
-    # print(request.json["caption"])
+    # create id to be used in amazon s3 and in postgresql
+    id = str(uuid.uuid4())
+    # make sure id does not already exist
+    while Posts.query.filter_by(id=id).first():
+        id = str(uuid.uuid4())
+    
+    caption = request.form["caption"]
 
-    # i = open(request.files["image"], "rb")
-
-    # image_url = request.json["image"]
-    # caption = request.json["caption"]
-
-    # image = data.get("myImage")
-    # caption = data.get("caption")
-
-    # new_post = Posts(
-    #     user_id=0,
-    #     image=image,
-    #     caption=caption,
-    # )
-    # db.session.add(new_post)
-    # db.session.commit()
+    # add new row to posts
+    new_post = Posts(
+        id=id,
+        user_id=0,
+        caption=caption,
+    )
+    db.session.add(new_post)
+    db.session.commit()
 
     ###############################################################################################
-    print()
-    print(request.files["file"])
-    print()
 
+    # image file
     file = request.files["file"].read()
-    print(file)
-
+    
+    # add to amazon s3
     client = s3_client()
-    client.put_object(Body=file, Bucket="swe-tastebuds", Key="key")
+    client.put_object(Body=file, Bucket="swe-tastebuds", Key="Posts/"+id)
 
-    return jsonify("Post successfully uploaded")
-
+    return jsonify({"success": True})
 
 @create_post.route("/get_post", methods=["GET"])
 def get_post():
@@ -77,9 +70,9 @@ def get_post():
     return jsonify(
         [
             {
-                "image": Posts.image,
+                "id": Posts.id,
                 "caption": Posts.caption,
             }
-            for Posts in post
+            for Posts in reversed(post)
         ]
     )

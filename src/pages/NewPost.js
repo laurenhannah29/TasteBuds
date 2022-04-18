@@ -12,20 +12,14 @@ class NewPost extends Component {
 
         this.onImageChange = this.onImageChange.bind(this);
         this.onCaptionChange = this.onCaptionChange.bind(this);
+        this.onCaptionChange = this.onCaptionChange.bind(this);
     }
-
-    // state = {
-    //     image: null,
-    //     caption: ""
-    // };
 
     onImageChange = event => {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0];
-            console.log(img);
             this.setState({ file: img });
             this.setState({ image: URL.createObjectURL(img) });
-            console.log(this.state.value)
         }
     };
 
@@ -33,65 +27,52 @@ class NewPost extends Component {
         this.setState({ caption: event.target.value })
     };
 
-    onClickPost = () => {
-        const blob_image = new Blob([this.state.image], { type: "application/octet-stream" });
-        const blob_caption = new Blob([this.state.caption], { type: 'text/plain' });
-
+    onClickPost = async e => {
+        e.preventDefault();
 
         const formData = new FormData();
-        formData.append("image", blob_image, this.state.name);
-        formData.append("caption", blob_caption, "caption");
         formData.append("file", this.state.file);
+        formData.append("caption", this.state.caption)
 
-        console.log(blob_image);
-        console.log(JSON.stringify({ image: this.state.image, caption: this.state.caption, file: this.state.file }));
-
-        fetch("/save_post", {
-            method: "POST",
-            // headers: { 'Content-Type': 'application/json' },
+        let success = false;
+        await fetch("/save_post", {
+            method: "POST", 
             body: formData
-            // body: JSON.stringify({ image: this.state.image, caption: this.state.caption })
-        });
+        })
+        .then(response => response.json())
+        .then(data => success = data["success"]);
+        
+        // redirect to home page if fetch returns true
+        if(success){
+            window.location.replace("/");
+        }
+        else{
+            alert("Error saving post!");
+        }
     }
-
 
     render() {
         return (
             <div>
                 <div>
                     <div>
-                        {/* <form method="POST" action="/save_post">
-                            <img src={this.state.image} name="myImage" />
+                        <img src={this.state.image} name="myImage" />
+                        <form onSubmit={this.onClickPost}>
                             <div>
                                 <input
                                     name="caption"
                                     type="text"
-                                    value={this.state.value}
+                                    value={this.state.caption}
                                     onChange={this.onCaptionChange}
                                     accept='image/*'
+                                    // required
                                 />
                             </div>
                             <h1>Select Image</h1>
-                            <input type="file" onChange={this.onImageChange} />
-                            <button type="submit" onClick={this.onClickPost}>Post!</button>
-                        </form> */}
-
-                        <img src={this.state.image} name="myImage" />
-                        <div>
-                            <input
-                                name="caption"
-                                type="text"
-                                value={this.state.caption}
-                                onChange={this.onCaptionChange}
-                                accept='image/*'
-                            />
-                        </div>
-                        <h1>Select Image</h1>
-                        <input type="file" onChange={this.onImageChange} />
-                        <button type="submit" onClick={this.onClickPost}>Post!</button>
-
+                            <input type="file" onChange={this.onImageChange}  />
+                            <button type="submit">Post!</button>
+                        </form>
                     </div>
-
                 </div>
             </div>
         );

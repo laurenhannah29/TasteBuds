@@ -4,8 +4,6 @@ from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template, request
 from flask_login import LoginManager
 
-# import boto3
-
 from utils.models import db, Users
 from utils.saved import saved
 from utils.auth import auth
@@ -53,26 +51,6 @@ bp = Blueprint(
 @bp.route("/NewPost")
 def index():
     return render_template("index.html")
-
-
-# @bp.route("/upload", methods=["POST"])
-# def upload():
-#     """
-#     Upload a file to the swe-tastebuds amazon s3 bucket
-#     """
-#     print("uploaded")
-#     print(request.json)
-#     # object = open(
-#     #     "/home/sage/tastebuds/p1m3-starter-code/static/react/batman.png", "rb"
-#     # )
-#     # object = open(image, "rb")
-
-#     client = s3_client()
-#     # upload_file_response = client.put_object(
-#     #     Body=object, Bucket="swe-tastebuds", Key="key"
-#     # )
-
-#     return render_template("index.html")
 
 
 app.register_blueprint(bp)
