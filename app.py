@@ -47,10 +47,17 @@ bp = Blueprint(
 
 
 @bp.route("/", methods=["POST", "GET"])
+# @bp.route("/saved")
+# @bp.route("/EditProfile")
+# @bp.route("/NewPost")
+def index():
+    return render_template("landingPage.html")
+
+@bp.route("/home")
 @bp.route("/saved")
 @bp.route("/EditProfile")
 @bp.route("/NewPost")
-def index():
+def home():
     return render_template("index.html")
 
 

@@ -43,7 +43,8 @@ def login():
                 "login.html", is_login_page=True, invalid_username_or_password=True
             )
         login_user(user_data)
-        return redirect(url_for("bp.index"))  # redirect to the main page
+        print("going home")
+        return redirect(url_for("bp.home"))  # redirect to the main page
     return render_template("login.html", is_login_page=True)
 
 
