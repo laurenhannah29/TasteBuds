@@ -28,10 +28,8 @@ def load_saved():
     for save in saves:
         post = Posts.query.filter_by(id=save.post_id).first()
         data = {
-            "id": save.id,
             "user_id": save.user_id,
             "post_id": post.id,
-            "image": post.image,
             "caption": post.caption,
         }
         saves_list.append(data)

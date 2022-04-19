@@ -32,9 +32,8 @@ class Posts(db.Model):
     caption(String) caption under the post
     """
 
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String(), primary_key=True)
     user_id = db.Column(db.Integer)
-    image = db.Column(db.String())
     caption = db.Column(db.String())
 
 
@@ -61,4 +60,4 @@ class Saved(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer)
-    post_id = db.Column(db.Integer)
+    post_id = db.Column(db.String)
