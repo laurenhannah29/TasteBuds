@@ -27,19 +27,19 @@ const Home = () => {
         console.log(post["url"]);
         let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + post["id"];
         return (
-            <div>
-                <img src={ image_url } />
-                <p>{post["caption"]}</p>
+            <div class="post">
+                <img src={image_url} />
+                <p>Caption: {post["caption"]}</p>
             </div>
         )
     }
     console.log(posts);
 
     return (
-        <div>
-            Home page
+        <div class="App">
+            <div class="home">TasteBuds</div>
             {posts.map((post) => renderPost(post))}
-        </div>
+        </div >
 
     );
 }
