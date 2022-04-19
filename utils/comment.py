@@ -45,6 +45,6 @@ def load_comment():
         comments_list.append(data)
 
     # get the user name that is logged in, try to replace this later
-    user = Users.query.get(current_user.id).user
+    user = Users.query.get(current_user.id).username
 
     return jsonify({"comments": comments_list, "user": user})
