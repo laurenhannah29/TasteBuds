@@ -1,12 +1,15 @@
 import os
+from ssl import OPENSSL_VERSION_NUMBER
 from dotenv import find_dotenv, load_dotenv
-from flask import Flask, Blueprint, render_template
+from flask import Flask, Blueprint, render_template, request
 from flask_login import LoginManager
+
 from utils.models import db, Users
 from utils.saved import saved
 from utils.auth import auth
 from utils.create_post import create_post
 from utils.profile import profile
+from utils.nutrition import nutrition
 
 
 load_dotenv(find_dotenv())
@@ -46,6 +49,7 @@ bp = Blueprint(
 @bp.route("/", methods=["POST", "GET"])
 @bp.route("/saved")
 @bp.route("/EditProfile")
+@bp.route("/NewPost")
 def index():
     return render_template("index.html")
 
@@ -55,6 +59,7 @@ app.register_blueprint(saved)
 app.register_blueprint(auth)
 app.register_blueprint(create_post)
 app.register_blueprint(profile)
+app.register_blueprint(nutrition)
 
 
 app.run(

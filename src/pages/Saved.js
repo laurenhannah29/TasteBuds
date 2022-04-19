@@ -15,8 +15,13 @@ const Saved = () => {
     }, []);
 
     function renderSaved(saved) {
+        let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + saved["post_id"];
+
         return (
-            <SavedPost image={saved["image"]} caption={saved["caption"]} />
+            <div>
+                <img src={ image_url } />
+                <p>{saved["caption"]}</p>
+            </div>
         )
     }
 
@@ -26,6 +31,10 @@ const Saved = () => {
             <div>
                 {saves.map((saved) => renderSaved(saved))}
             </div>
+
+            <form method="POST" action="/upload">
+                <button type="submit">Upload</button>
+            </form>
         </div>
 
     );

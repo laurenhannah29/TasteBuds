@@ -38,9 +38,11 @@ const Home = () => {
     }, []);
 
     function renderPost(post) {
+        console.log(post["url"]);
+        let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + post["id"];
         return (
             <div>
-                <img src={post["image"]} />
+                <img src={ image_url } />
                 <p>{post["caption"]}</p>
             </div>
         )
