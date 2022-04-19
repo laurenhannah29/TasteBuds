@@ -7,12 +7,13 @@ class NewPost extends Component {
         this.state = {
             image: null,
             file: null,
-            caption: ""
+            caption: "",
+            category: []
         };
 
         this.onImageChange = this.onImageChange.bind(this);
         this.onCaptionChange = this.onCaptionChange.bind(this);
-        this.onCaptionChange = this.onCaptionChange.bind(this);
+        this.onCategoryChange = this.onCategoryChange.bind(this);
     }
 
     onImageChange = event => {
@@ -27,12 +28,17 @@ class NewPost extends Component {
         this.setState({ caption: event.target.value })
     };
 
+    onCategoryChange = event => {
+        this.setState({ category: event.target.value })
+    };
+
     onClickPost = async e => {
         e.preventDefault();
 
         const formData = new FormData();
         formData.append("file", this.state.file);
         formData.append("caption", this.state.caption)
+        formData.append("category", this.state.category)
 
         let success = false;
         await fetch("/save_post", {
@@ -59,6 +65,19 @@ class NewPost extends Component {
                         <img src={this.state.image} name="myImage" />
                         <form onSubmit={this.onClickPost}>
                             <div>
+                                <div>
+                                    <input type="checkbox" id="cuisine1" name="cuisine1" value="Chinese"/>
+                                    <label for="cuisine1"> Chinese</label>
+                                    <input type="checkbox" id="cuisine2" name="cuisine2" value="Indian"/>
+                                    <label for="cuisine2"> Indian</label>
+                                    <input type="checkbox" id="cuisine3" name="cuisine3" value="Italian"/>
+                                    <label for="cuisine3"> Italian</label>
+                                    <input type="checkbox" id="cuisine4" name="cuisine4" value="American"/>
+                                    <label for="cuisine4"> American</label>
+                                    <input type="checkbox" id="cuisine5" name="cuisine5" value="Mexican"/>
+                                    <label for="cuisine5"> Mexican</label>
+
+                                </div>
                                 <input
                                     name="caption"
                                     type="text"

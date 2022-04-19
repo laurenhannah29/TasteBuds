@@ -3,7 +3,7 @@
 import { Post } from '../components/Post.js'; //create post page
 import React, { useState, useEffect } from "react";
 import Data from "../components/Data.js";
-import Buttons from "../components/Buttons.js";
+import FilterButtons from "../components/FilterButtons.js";
 import PostBlocks from '../components/PostBlocks.js';
 
 const Home = () => {
@@ -55,7 +55,7 @@ const Home = () => {
             <div>
         <div>
           {/* <h1>Filtering Posts Page</h1> */}
-          <Buttons
+          <FilterButtons
             filterPost={filterPost}
             setPost={setPost}
             blogPosts={blogPosts}

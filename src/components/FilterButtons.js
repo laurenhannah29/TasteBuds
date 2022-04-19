@@ -1,7 +1,7 @@
 import React from "react";
 import Data from "./Data";
 
-const Buttons = ({ filterPost, setPost, blogPosts }) => {
+const FilterButtons = ({ filterPost, setPost, blogPosts }) => {
   return (
     <>
       <div>
@@ -26,4 +26,4 @@ const Buttons = ({ filterPost, setPost, blogPosts }) => {
   );
 };
 
-export default Buttons;
+export default FilterButtons;
