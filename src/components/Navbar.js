@@ -10,6 +10,7 @@ const Navbar = () => {
             <li><Link to="/saved">Saved</Link></li>
             {/* Maybe some logic to determine what is in here such logout or login */}
             <li><Link to="/NewPost">Create a Post!!!</Link></li>
+            <li><Link to="/Appliance">See what I just added</Link></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/logout">Logout</a></li>
         </div>
