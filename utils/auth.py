@@ -17,7 +17,6 @@ from utils.models import db
 
 auth = Blueprint("auth", __name__)
 
-# @auth.route("/", methods=["GET", "POST"])
 @auth.route("/login", methods=["GET", "POST"])
 def login():
     """
@@ -43,7 +42,6 @@ def login():
                 "login.html", is_login_page=True, invalid_username_or_password=True
             )
         login_user(user_data)
-        print("going home")
         return redirect(url_for("bp.home"))  # redirect to the main page
     return render_template("login.html", is_login_page=True)
 
