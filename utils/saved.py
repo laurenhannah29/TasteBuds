@@ -38,4 +38,7 @@ def load_saved():
     # user = Users.query.get(current_user.id).user
     user = "placeholder"
 
+    print(current_user.username, "THE USERNAME")
+    print()
+
     return jsonify({"saves": saves_list, "user": user})

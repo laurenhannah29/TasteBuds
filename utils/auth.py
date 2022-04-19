@@ -2,7 +2,6 @@ from flask import Flask, Blueprint, render_template, request, jsonify, url_for
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import (
-    user_loader,
     login_user,
     login_required,
     current_user,
@@ -83,7 +82,8 @@ def is_authenticated():
     """
     logged_in = current_user.is_authenticated
     if logged_in:
-        username = user_loader(current_user.id)
+        # username = load_user(current_user.id)
+        username = Users.query.get(int(current_user.id))
     else:
         username = None
     return jsonify(

@@ -26,26 +26,32 @@ const Saved = () => {
 
         return (
             <div>
-                <img src={ image_url } />
+                <img src={image_url} />
                 <p>{saved["caption"]}</p>
             </div>
         )
     }
 
     console.log(username, authenticated);
-    return (
-        <div>
-            <h1>Saved page</h1>
+    if (authenticated) {
+        return (
             <div>
-                {saves.map((saved) => renderSaved(saved))}
+                <h1>Saved page</h1>
+                <div>
+                    {saves.map((saved) => renderSaved(saved))}
+                </div>
             </div>
 
-            <form method="POST" action="/upload">
-                <button type="submit">Upload</button>
-            </form>
-        </div>
-
-    );
+        );
+    }
+    else {
+        return (
+            <div>
+                <h1>Saved page</h1>
+                <h2>Please login to see saved posts</h2>
+            </div>
+        )
+    }
 }
 
 export default Saved;
