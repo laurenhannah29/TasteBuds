@@ -24,7 +24,7 @@ def upload_comment():
 
     db.session.add(new_comment)
     db.session.commit()
-    return flask.redirect((url_for("bp.index")))
+    return flask.redirect((url_for("bp.home")))
     # return jsonify({"saves": "skjnfsk", "user": "user"})
 
 
