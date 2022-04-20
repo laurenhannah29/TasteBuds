@@ -7,6 +7,14 @@
             color: whitesmoke;
             font-family: Arial, Helvetica, sans-serif;
             background-color: #323439;
+
+            /* Background pattern from Toptal Subtle Patterns */
+            background-image: url('https://img.freepik.com/free-photo/food-cooking-background-black-table-fresh-vegetables-spices-herbs-ingredients-cooking_215990-485.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: 100% 100%;
+
+
         }
 
         a:link {
@@ -30,14 +38,15 @@
 <body>
     <div class="entry">
         {% if is_login_page %}
-        <h1>Welcome to TastBuds!!!</h1>
-        <h1>Log In</h1>
+        <h1>Welcome to TasteBuds!</h1>
+        <h4>Log In</h4>
         {% if invalid_username_or_password %}
         <div class="error">Invalid Username or Password</div>
         {% endif %}
         <form method="POST" action="/login">
             {% else %}
             <h1>Sign Up</h1>
+            <h3>Create your TasteBuds Account</h3>
             {% if user_exists %}
             <div class="error">Username is already taken, please choose a new one</div>
             {% endif %}
