@@ -1,0 +1,8 @@
+python-dotenv==0.14.0
+requests
+Flask
+flask_sqlalchemy
+flask_login
+SQLAlchemy
+psycopg2
+flask-s3
