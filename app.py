@@ -1,5 +1,4 @@
 import os
-from ssl import OPENSSL_VERSION_NUMBER
 from dotenv import find_dotenv, load_dotenv
 from flask import Flask, Blueprint, render_template, request
 from flask_login import LoginManager

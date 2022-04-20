@@ -42,13 +42,13 @@ def save_post():
     while Posts.query.filter_by(id=id).first():
         id = str(uuid.uuid4())
 
+    title = request.form["title"]
     caption = request.form["caption"]
+    nationality = request.form["nationality"]
 
     # add new row to posts
     new_post = Posts(
-        id=id,
-        user_id=0,
-        caption=caption,
+        id=id, user_id=0, title=title, caption=caption, nationality=nationality
     )
     db.session.add(new_post)
     db.session.commit()
@@ -73,6 +73,8 @@ def get_post():
             {
                 "id": Posts.id,
                 "caption": Posts.caption,
+                "title": Posts.title,
+                "nationality": Posts.nationality,
             }
             for Posts in reversed(post)
         ]
