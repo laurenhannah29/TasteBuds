@@ -38,9 +38,12 @@ const Home = () => {
     }
 
     function onClickSave(e){
+        const formData = new FormData();
+        formData.append("post_id", e.target.value);
+        console.log(e.target.value);
         fetch("/save_post",{
-            method: "POST",
-            body: e.target.post_id
+            method: "POST",      
+            body: formData
         });
     }
 
@@ -77,7 +80,7 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>{post["title"]}</h3>
                     <p>{post["caption"]}</p>
-                    <SaveButton post_id={post["id"]} onClick={ onClickSave }/>
+                    <SaveButton value={post["id"]} onClick={ onClickSave }/>
                     
                     See what others said! <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
@@ -96,7 +99,7 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>Title: {post["title"]}</h3>
                     <p>Caption: {post["caption"]}</p>
-                    <SaveButton post_id={post["id"]} onClick={ onClickSave }/>
+                    <SaveButton value={post["id"]} onClick={ onClickSave }/>
 
                     See what others said! <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
