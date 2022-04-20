@@ -122,6 +122,7 @@ class NewPost extends Component {
                                         type="text"
                                         value={this.state.title}
                                         onChange={this.onTitleChange}
+                                        placeholder="title"
                                     // required
                                     />
                                 </div>

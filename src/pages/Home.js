@@ -1,5 +1,5 @@
 import { Post } from '../components/Post.js'; //create post page
-import {SaveButton} from '../components/SaveButton.js'
+import { SaveButton } from '../components/SaveButton.js'
 import { useState, useEffect } from "react";
 
 
@@ -37,12 +37,12 @@ const Home = () => {
         setNationality(e.target.value);
     }
 
-    function onClickSave(e){
+    function onClickSave(e) {
         const formData = new FormData();
         formData.append("post_id", e.target.value);
         console.log(e.target.value);
-        fetch("/save_post",{
-            method: "POST",      
+        fetch("/save_post", {
+            method: "POST",
             body: formData
         });
     }
@@ -58,7 +58,7 @@ const Home = () => {
         for (let item of comments) {
             if (item.post_id === post["id"]) {
                 const row = (
-                    <div>
+                    <div class="comment">
                         <p> <b> {item.username}</b>: {item.comment} </p>
                     </div>
                 );
@@ -80,8 +80,8 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>{post["title"]}</h3>
                     <p>{post["caption"]}</p>
-                    <SaveButton value={post["id"]} onClick={ onClickSave }/>
-                    
+                    <SaveButton value={post["id"]} onClick={onClickSave} />
+
                     See what others said! <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
                         <input type="hidden" name="post_id" value={post["id"]} />
@@ -99,9 +99,10 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>Title: {post["title"]}</h3>
                     <p>Caption: {post["caption"]}</p>
-                    <SaveButton value={post["id"]} onClick={ onClickSave }/>
+                    <SaveButton value={post["id"]} onClick={onClickSave} />
 
-                    See what others said! <p>{itemRows}</p>
+                    <div class="comment"> See what others said! </div>
+                    <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
                         <input type="hidden" name="post_id" value={post["id"]} />
                         <input type="text" name="comment" placeholder="Leave a comment" />
@@ -111,7 +112,7 @@ const Home = () => {
             )
         }
         // if not under filter, dont render the post
-        return;    
+        return;
     }
 
     return (
