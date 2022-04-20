@@ -4,16 +4,7 @@ import { Post } from '../components/Post.js'; //create post page
 
 const Home = () => {
     const [posts, setPosts] = useState([])
-<<<<<<< HEAD
     const [comments, setComments] = useState([])
-
-=======
->>>>>>> main
-    // const posts = val.map(
-    //     (post, i) => <Post
-    //         image={post.image}
-    //         caption={post.caption}
-    //     />);
 
     useEffect(() => {
         fetch('/get_post', {
@@ -26,7 +17,6 @@ const Home = () => {
             .then((data) => {
                 setPosts(data);
             });
-<<<<<<< HEAD
 
         fetch('/load_comment', {
             method: 'GET',
@@ -79,17 +69,6 @@ const Home = () => {
                     <input type="submit" value="Submit" />
                 </form>
                 {/* {comments.map((comment) => renderComment(comment))} */}
-=======
-    }, []);
-
-    function renderPost(post) {
-        console.log(post["url"]);
-        let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + post["id"];
-        return (
-            <div>
-                <img src={ image_url } />
-                <p>{post["caption"]}</p>
->>>>>>> main
             </div>
         )
     }
