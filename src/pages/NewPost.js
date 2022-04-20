@@ -66,7 +66,7 @@ class NewPost extends Component {
 
     render() {
         return (
-            <div>
+            <div class="App">
                 <div>
                     <div>
                         <img src={this.state.image} name="myImage" />
@@ -132,6 +132,7 @@ class NewPost extends Component {
                                         type="text"
                                         value={this.state.caption}
                                         onChange={this.onCaptionChange}
+                                        placeholder="Caption"
                                     // required
                                     />
                                 </div>

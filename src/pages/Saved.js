@@ -18,8 +18,8 @@ const Saved = () => {
         let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + saved["post_id"];
 
         return (
-            <div>
-                <img src={ image_url } />
+            <div class="App">
+                <img src={image_url} />
                 <p>{saved["caption"]}</p>
             </div>
         )

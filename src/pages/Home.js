@@ -43,8 +43,8 @@ const Home = () => {
             return (
                 <div>
                     <img src={image_url} />
-                    <h3>{post["title"]}</h3>
-                    <p>{post["caption"]}</p>
+                    <h3>Title: {post["title"]}</h3>
+                    <p>Caption: {post["caption"]}</p>
                 </div>
             )
         }
@@ -54,63 +54,66 @@ const Home = () => {
 
     return (
         <div>
-            Home page
             <div>
-                <div>
-                    <label>
-                        <input type="radio"
-                            id="cuisine1"
-                            name="nationality"
-                            value="Chinese"
-                            onChange={onNationalityChange}
-                        />
-                        Chinese
-                    </label>
-                    <label>
-                        <input type="radio"
-                            name="nationality"
-                            value="Indian"
-                            onChange={onNationalityChange}
-                        />
-                        Indian
-                    </label>
-                    <label>
-                        <input type="radio"
-                            name="nationality"
-                            value="Italian"
-                            onChange={onNationalityChange}
-                        />
-                        Italian
-                    </label>
-                    <label>
-                        <input type="radio"
-                            name="nationality"
-                            value="American"
-                            onChange={onNationalityChange}
-                        />
-                        American
-                    </label>
-                    <label>
-                        <input type="radio"
-                            name="nationality"
-                            value="Mexican"
-                            onChange={onNationalityChange}
-                        />
-                        Mexican
-                    </label>
-                    <label>
-                        <input type="radio"
-                            name="nationality"
-                            value="Clear"
-                            onChange={onNationalityChange}
-                        />
-                        Clear
-                    </label>
+                <div class="App">
+                    <div class="home">
+                        TasteBuds
+                    </div>
+                    <div>
+                        <label>
+                            <input type="radio"
+                                id="cuisine1"
+                                name="nationality"
+                                value="Chinese"
+                                onChange={onNationalityChange}
+                            />
+                            Chinese
+                        </label>
+                        <label>
+                            <input type="radio"
+                                name="nationality"
+                                value="Indian"
+                                onChange={onNationalityChange}
+                            />
+                            Indian
+                        </label>
+                        <label>
+                            <input type="radio"
+                                name="nationality"
+                                value="Italian"
+                                onChange={onNationalityChange}
+                            />
+                            Italian
+                        </label>
+                        <label>
+                            <input type="radio"
+                                name="nationality"
+                                value="American"
+                                onChange={onNationalityChange}
+                            />
+                            American
+                        </label>
+                        <label>
+                            <input type="radio"
+                                name="nationality"
+                                value="Mexican"
+                                onChange={onNationalityChange}
+                            />
+                            Mexican
+                        </label>
+                        <label>
+                            <input type="radio"
+                                name="nationality"
+                                value="Clear"
+                                onChange={onNationalityChange}
+                            />
+                            Clear
+                        </label>
+                    </div>
                 </div>
+                {posts.map((post) => renderPost(post))}
             </div>
-            {posts.map((post) => renderPost(post))}
         </div>
-
     );
 }
 

@@ -1,12 +1,36 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="/static/style.css" />
+    <style>
+        body {
+            text-align: center;
+            color: whitesmoke;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #323439;
+        }
+
+        a:link {
+            color: whitesmoke;
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        a:visited {
+            color: whitesmoke;
+        }
+
+        h1 {
+            font-size: 50px;
+            font-family: Yeseva One;
+            color: #feca1d;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="entry" style="text-align: center;background-color: #89cff0;">
+    <div class="entry">
         {% if is_login_page %}
+        <h1>Welcome to TastBuds!!!</h1>
         <h1>Log In</h1>
         {% if invalid_username_or_password %}
         <div class="error">Invalid Username or Password</div>
