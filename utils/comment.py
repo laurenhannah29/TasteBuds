@@ -3,7 +3,7 @@ from flask_login import (
     login_required,
     current_user,
 )
-from utils.models import db, Users, Comments
+from utils.models import db, Users, Comment
 import flask
 
 comment = Blueprint("comment", __name__)
@@ -16,7 +16,7 @@ def upload_comment():
     comment = data.get("comment")
     post_id = data.get("post_id")
 
-    new_comment = Comments(
+    new_comment = Comment(
         user_id=current_user.id,
         post_id=post_id,
         comment=comment,
@@ -28,23 +28,18 @@ def upload_comment():
     # return jsonify({"saves": "skjnfsk", "user": "user"})
 
 
-@comment.route("/load_comment", methods=["POST", "GET"])
+@comment.route("/load_comment", methods=["GET"])
 def load_comment():
 
-    comments = Comments.query.filter_by(user_id=current_user.id)
-
-    comments_list = []
-
-    for comment in comments:
-        username = Users.query.filter_by(id=comment.user_id).first().username
-        data = {
-            "username": username,
-            "post_id": comment.post_id,
-            "comment": comment.comment,
-        }
-        comments_list.append(data)
-
-    # get the user name that is logged in, try to replace this later
-    user = Users.query.get(current_user.id).username
-
-    return jsonify({"comments": comments_list, "user": user})
+    # comments = Comment.query.filter_by(user_id=current_user.id)
+    comments = Comment.query.all()
+    return jsonify(
+        [
+            {
+                "username": current_user.id,
+                "post_id": Comment.post_id,
+                "comment": Comment.comment,
+            }
+            for Comment in reversed(comments)
+        ]
+    )

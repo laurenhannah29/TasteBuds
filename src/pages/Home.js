@@ -36,37 +36,41 @@ const Home = () => {
             });
     }, []);
 
-    function renderComment(comment) {
-        return (
-            <div>
-                {/* <p>{comment["comment"]}</p> */}
-            </div>
-        )
-
-    }
 
     function renderPost(post) {
-        console.log(post["url"]);
         let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + post["id"];
         // setComments([]);
+        let dbComment = [];
         let newComments = [];
-        for (const comment of comments) {
-            if (comment["post_id"] === post["id"]) {
-                newComments.push(comment["comment"]);
-            }
-            console.log("xkjfd")
+        console.log(comments);
 
+        const itemRows = [];
+        for (let item of comments) {
+            if (item.post_id === post["id"]) {
+                const row = (
+                    <div>
+                        <p> <b> {item.username}</b>: {item.comment} </p>
+                    </div>
+                );
+                itemRows.push(row);
+            }
         }
-        newComments.push()
-        // setComments(newComments);
+
+        comments.map((c) => {
+            if (c.post_id === post["id"]) {
+                dbComment.push(c.comment);
+            }
+        })
 
 
         return (
             <div>
-                <input type="hidden" name="post_id" value={post["id"]} />
+
                 <img src={image_url} />
                 <p>{post["caption"]}</p>
+                See what others said! <p>{itemRows}</p>
                 <form method="POST" action="/upload_comment">
+                    <input type="hidden" name="post_id" value={post["id"]} />
                     <input type="text" name="comment" placeholder="Leave a comment" />
                     <input type="submit" value="Submit" />
                 </form>

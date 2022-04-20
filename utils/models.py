@@ -37,7 +37,7 @@ class Posts(db.Model):
     caption = db.Column(db.String())
 
 
-class Comments(db.Model):
+class Comment(db.Model):
     """
     id(Integer) primary key
     user_id(Intger) user that creater comment
@@ -46,9 +46,9 @@ class Comments(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer())
-    post_id = db.Column(db.Integer)
-    comment = db.Column(db.String())
+    user_id = db.Column(db.Integer)
+    post_id = db.Column(db.String)
+    comment = db.Column(db.String)
 
 
 class Saved(db.Model):
