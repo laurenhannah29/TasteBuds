@@ -9,7 +9,7 @@ import NewPost from '../pages/NewPost';
 const Main = () => {
     return (
         <Routes> {/* The swtich decides which component to show based on the current url */}
-            <Route path='/' element={<Home />} />
+            <Route path='/home' element={<Home />} />
             <Route path='/saved' element={<Saved />} />
             <Route path='/NewPost' element={<NewPost />} />
             <Route path='/EditProfile' element={<EditProfile />} />
