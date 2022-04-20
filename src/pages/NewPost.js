@@ -36,24 +36,24 @@ class NewPost extends Component {
 
         let success = false;
         await fetch("/save_post", {
-            method: "POST", 
+            method: "POST",
             body: formData
         })
-        .then(response => response.json())
-        .then(data => success = data["success"]);
-        
+            .then(response => response.json())
+            .then(data => success = data["success"]);
+
         // redirect to home page if fetch returns true
-        if(success){
+        if (success) {
             window.location.replace("/");
         }
-        else{
+        else {
             alert("Error saving post!");
         }
     }
 
     render() {
         return (
-            <div>
+            <div class="App">
                 <div>
                     <div>
                         <img src={this.state.image} name="myImage" />
@@ -65,11 +65,12 @@ class NewPost extends Component {
                                     value={this.state.caption}
                                     onChange={this.onCaptionChange}
                                     accept='image/*'
-                                    // required
+                                    placeholder="Caption"
+                                // required
                                 />
                             </div>
                             <h1>Select Image</h1>
-                            <input type="file" onChange={this.onImageChange}  />
+                            <input type="file" onChange={this.onImageChange} />
                             <button type="submit">Post!</button>
                         </form>
                     </div>
