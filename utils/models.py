@@ -33,6 +33,8 @@ class Posts(db.Model):
     """
 
     id = db.Column(db.String(), primary_key=True)
+    title = db.Column(db.String())
+    nationality = db.Column(db.String())
     user_id = db.Column(db.Integer)
     caption = db.Column(db.String())
 
