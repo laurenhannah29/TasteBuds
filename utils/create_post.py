@@ -54,7 +54,8 @@ def upload_post():
     db.session.commit()
 
     ###############################################################################################
-
+    #amazon s3 uploading
+    
     # image file
     file = request.files["file"].read()
 
