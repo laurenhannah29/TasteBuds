@@ -48,7 +48,7 @@ class NewPost extends Component {
         formData.append("title", this.state.title)
 
         let success = false;
-        await fetch("/save_post", {
+        await fetch("/upload_post", {
             method: "POST",
             body: formData
         })

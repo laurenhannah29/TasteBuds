@@ -1,5 +1,7 @@
 import { Post } from '../components/Post.js'; //create post page
+import {SaveButton} from '../components/SaveButton.js'
 import { useState, useEffect } from "react";
+
 
 
 const Home = () => {
@@ -35,13 +37,22 @@ const Home = () => {
         setNationality(e.target.value);
     }
 
+    function onClickSave(e){
+        const formData = new FormData();
+        formData.append("post_id", e.target.value);
+        console.log(e.target.value);
+        fetch("/save_post",{
+            method: "POST",      
+            body: formData
+        });
+    }
+
 
     function renderPost(post) {
         let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + post["id"];
 
         let dbComment = [];
         let newComments = [];
-        console.log(comments);
 
         const itemRows = [];
         for (let item of comments) {
@@ -69,6 +80,8 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>{post["title"]}</h3>
                     <p>{post["caption"]}</p>
+                    <SaveButton value={post["id"]} onClick={ onClickSave }/>
+                    
                     See what others said! <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
                         <input type="hidden" name="post_id" value={post["id"]} />
@@ -86,6 +99,8 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>Title: {post["title"]}</h3>
                     <p>Caption: {post["caption"]}</p>
+                    <SaveButton value={post["id"]} onClick={ onClickSave }/>
+
                     See what others said! <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
                         <input type="hidden" name="post_id" value={post["id"]} />

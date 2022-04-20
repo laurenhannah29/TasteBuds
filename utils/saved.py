@@ -20,7 +20,7 @@ def load_saved():
     # saves = Saved.query.filer_by(user_id=current_user.id)
 
     # place holder
-    saves = Saved.query.filter_by(user_id=0)
+    saves = Saved.query.filter_by(user_id=current_user.id)
 
     saves_list = []
 
@@ -30,6 +30,7 @@ def load_saved():
         data = {
             "user_id": save.user_id,
             "post_id": post.id,
+            "title": post.title,
             "caption": post.caption,
         }
         saves_list.append(data)
@@ -39,3 +40,27 @@ def load_saved():
     user = "placeholder"
 
     return jsonify({"saves": saves_list, "user": user})
+
+
+@saved.route("/save_post", methods=["POST"])
+def save_post():
+    post_id = request.form["post_id"]
+
+    savedPosts = Saved.query.all()
+
+    # if post already saved, return 
+    for post in savedPosts:
+        if post.user_id == current_user.id and post.post_id == post_id:
+            return redirect(url_for("bp.index"))
+
+
+    new_saved = Saved(
+        post_id=post_id,
+        user_id= current_user.id
+    )
+
+    db.session.add(new_saved)
+    db.session.commit()
+
+    return redirect(url_for("bp.index"))
+    # return redirect(url_for("bp.home"))s
