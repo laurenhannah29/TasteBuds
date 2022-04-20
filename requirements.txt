@@ -1,4 +1,4 @@
-python-dotenv
+python-dotenv==0.19.2
 requests
 Flask
 flask_sqlalchemy
