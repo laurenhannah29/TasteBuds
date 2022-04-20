@@ -39,3 +39,11 @@ def load_saved():
     user = "placeholder"
 
     return jsonify({"saves": saves_list, "user": user})
+
+
+@saved.route("/save_post", methods=["POST"])
+def save_post():
+    print(request.form)
+
+    return redirect(url_for("bp.index"))
+    # return redirect(url_for("bp.home"))s

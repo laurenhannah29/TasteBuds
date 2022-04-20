@@ -29,8 +29,8 @@ def s3_client():
     return client
 
 
-@create_post.route("/save_post", methods=["POST"])
-def save_post():
+@create_post.route("/upload_post", methods=["POST"])
+def upload_post():
     """
     This takes is used on the create post page.
     It adds the data to the database
