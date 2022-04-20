@@ -3,7 +3,8 @@ import { useState, useEffect } from "react";
 
 
 const Home = () => {
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState([])
+    const [comments, setComments] = useState([])
     const [nationality, setNationality] = useState("Clear");
 
     useEffect(() => {
@@ -17,6 +18,17 @@ const Home = () => {
             .then((data) => {
                 setPosts(data);
             });
+
+        fetch('/load_comment', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setComments(data);
+            });
     }, []);
 
     function onNationalityChange(e) {
@@ -27,6 +39,29 @@ const Home = () => {
     function renderPost(post) {
         let image_url = "https://swe-tastebuds.s3.amazonaws.com/Posts/" + post["id"];
 
+        let dbComment = [];
+        let newComments = [];
+        console.log(comments);
+
+        const itemRows = [];
+        for (let item of comments) {
+            if (item.post_id === post["id"]) {
+                const row = (
+                    <div>
+                        <p> <b> {item.username}</b>: {item.comment} </p>
+                    </div>
+                );
+                itemRows.push(row);
+            }
+        }
+
+        comments.map((c) => {
+            if (c.post_id === post["id"]) {
+                dbComment.push(c.comment);
+            }
+        })
+
+
         // if filter is clear render all posts
         if (nationality === "Clear") {
             return (
@@ -34,6 +69,12 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>{post["title"]}</h3>
                     <p>{post["caption"]}</p>
+                    See what others said! <p>{itemRows}</p>
+                    <form method="POST" action="/upload_comment">
+                        <input type="hidden" name="post_id" value={post["id"]} />
+                        <input type="text" name="comment" placeholder="Leave a comment" />
+                        <input type="submit" value="Submit" />
+                    </form>
                 </div>
             )
         }
@@ -45,11 +86,17 @@ const Home = () => {
                     <img src={image_url} />
                     <h3>Title: {post["title"]}</h3>
                     <p>Caption: {post["caption"]}</p>
+                    See what others said! <p>{itemRows}</p>
+                    <form method="POST" action="/upload_comment">
+                        <input type="hidden" name="post_id" value={post["id"]} />
+                        <input type="text" name="comment" placeholder="Leave a comment" />
+                        <input type="submit" value="Submit" />
+                    </form>
                 </div>
             )
         }
         // if not under filter, dont render the post
-        return;
+        return;    
     }
 
     return (

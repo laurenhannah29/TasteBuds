@@ -62,8 +62,6 @@ def save_post():
     client = s3_client()
     client.put_object(Body=file, Bucket="swe-tastebuds", Key="Posts/" + id)
 
-    print(request.form)
-
     return jsonify({"success": True})
 
 
