@@ -37,7 +37,11 @@ class Posts(db.Model):
     caption = db.Column(db.String())
 
 
+<<<<<<< HEAD
 class Comment(db.Model):
+=======
+class Comments(db.Model):
+>>>>>>> main
     """
     id(Integer) primary key
     user_id(Intger) user that creater comment
@@ -46,9 +50,15 @@ class Comment(db.Model):
     """
 
     id = db.Column(db.Integer, primary_key=True)
+<<<<<<< HEAD
     user_id = db.Column(db.Integer)
     post_id = db.Column(db.String)
     comment = db.Column(db.String)
+=======
+    user_id = db.Column(db.Integer())
+    post_id = db.Column(db.Integer)
+    comment = db.Column(db.String())
+>>>>>>> main
 
 
 class Saved(db.Model):

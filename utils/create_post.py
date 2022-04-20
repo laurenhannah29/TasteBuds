@@ -41,7 +41,11 @@ def save_post():
     # make sure id does not already exist
     while Posts.query.filter_by(id=id).first():
         id = str(uuid.uuid4())
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> main
     caption = request.form["caption"]
 
     # add new row to posts
@@ -57,6 +61,7 @@ def save_post():
 
     # image file
     file = request.files["file"].read()
+<<<<<<< HEAD
 
     # add to amazon s3
     client = s3_client()
@@ -65,6 +70,15 @@ def save_post():
     return jsonify({"success": True})
 
 
+=======
+    
+    # add to amazon s3
+    client = s3_client()
+    client.put_object(Body=file, Bucket="swe-tastebuds", Key="Posts/"+id)
+
+    return jsonify({"success": True})
+
+>>>>>>> main
 @create_post.route("/get_post", methods=["GET"])
 def get_post():
     post = Posts.query.all()
