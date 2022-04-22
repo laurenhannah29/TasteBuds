@@ -6,3 +6,4 @@ flask_login
 SQLAlchemy
 psycopg2
 boto3
+flask_mail
