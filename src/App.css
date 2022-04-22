@@ -75,7 +75,16 @@ img {
   font-weight: bold;
 }
 
-.comment {
-  font-size: 30px;
-  font-weight: bolder;
+.com, h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 20px;
+}
+
+#textboxid
+{
+    height: 50px;
 }
