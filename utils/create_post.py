@@ -1,5 +1,8 @@
 # pylint: disable=trailing-whitespace, disable=maybe-no-member, C0116, C0103, C0114
 import os
+import uuid
+
+# pylint: disable=unused-import
 from flask import Blueprint, request, redirect, url_for, flash, render_template, jsonify
 from flask_login import (
     login_user,
@@ -8,8 +11,8 @@ from flask_login import (
 )
 from dotenv import load_dotenv
 import boto3
-import uuid
 
+# pylint: disable=import-error
 from utils.models import db, Posts
 
 load_dotenv()

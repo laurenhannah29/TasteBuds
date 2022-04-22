@@ -1,8 +1,15 @@
+"""
+saved.py
+"""
 from flask import Blueprint, request, redirect, url_for, jsonify
+
+# pylint: disable=unused-import
 from flask_login import (
     login_required,
     current_user,
 )
+
+# pylint: disable=import-error
 from utils.models import db, Users, Saved, Posts
 
 
@@ -45,6 +52,8 @@ def load_saved():
 @saved.route("/save_post", methods=["POST"])
 def save_post():
     post_id = request.form["post_id"]
+    # pylint: disable=invalid-name
+    # no error
     savedPosts = Saved.query.all()
 
     # if post already saved, return

@@ -1,5 +1,12 @@
+"""
+profile.py
+"""
 import flask
+
+# pylint: disable=unused-import
 from flask_login import current_user, login_required
+
+# pylint: disable=import-error
 from utils.models import db, Users
 
 
@@ -36,7 +43,7 @@ def save_profile():
 
     user_profile = Users.query.filter_by(id=current_user.id).first()
 
-    # TODO add profile picture
+    # TO-do add profile picture
     new_profile = Users(
         id=user_profile.id,
         username=profile_name,
