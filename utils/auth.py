@@ -1,21 +1,24 @@
-from flask import Flask, Blueprint, render_template, request
+from flask import Blueprint, render_template, url_for, request
 from flask_sqlalchemy import SQLAlchemy
-from dotenv import find_dotenv, load_dotenv
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import (
-    LoginManager,
     login_user,
     login_required,
-    current_user,
     logout_user,
 )
+from flask_mail import Mail, Message
+from itsdangerous import URLSafeTimedSerializer, SignatureExpired
+
 from utils.models import db, Users
-from flask import Flask, Blueprint, render_template, url_for
 from utils.models import db
 
 
 auth = Blueprint("auth", __name__)
+
+mail = Mail()
+
+s = URLSafeTimedSerializer("Thisisasecret!")
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
@@ -47,14 +50,23 @@ def login():
 
 
 @auth.route("/signup", methods=["GET", "POST"])
-def signup():
-    """
-    user can create a username and password and then login to the website
-    """
+def signup():  # user can create a username and password and then login to the website
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
         email = request.form.get("email")
+        token = s.dumps(email, salt="email-confirm")
+
+        msg = Message(
+            "Confirm Email", sender="ClassiBeatz.info@gmail.com", recipients=[email]
+        )
+
+        link = url_for("auth.confirm_email", token=token, _external=True)
+
+        msg.body = "Your link is {}".format(link)
+
+        mail.send(msg)
+
         user_data = Users.query.filter_by(username=username).first()
         user_exists = user_data is not None
         if not user_exists:
@@ -65,11 +77,21 @@ def signup():
             # db.session.begin()
             db.session.add(user)
             db.session.commit()
-            return render_template("login.html", is_login_page=True)
+            # return '<h1>The email you entered is {}. The token is {}</h1>'.format(email, token)
+
+            return render_template("email.html")
         return render_template(
             "login.html", is_login_page=False, user_exists=user_exists
         )
     return render_template("login.html", is_login_page=False)
+
+@auth.route("/confirm_email/<token>")
+def confirm_email(token):
+    try:
+        email = s.loads(token, salt="email-confirm", max_age=3600)
+    except SignatureExpired:
+        return "<h1>The token is expired!</h1>"
+    return render_template("login.html", token_success=True, is_login_page=True)
 
 
 @auth.route("/logout")

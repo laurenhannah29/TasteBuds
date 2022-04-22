@@ -34,10 +34,13 @@
         <h1>Log In</h1>
         {% if invalid_username_or_password %}
         <div class="error">Invalid Username or Password</div>
+        {% elif token_success%}
+        <h1>Token works, please login now!</h1>
         {% endif %}
         <form method="POST" action="/login">
             {% else %}
             <h1>Sign Up</h1>
+            <h3>Create your TasteBuds Account </h3>
             {% if user_exists %}
             <div class="error">Username is already taken, please choose a new one</div>
             {% endif %}

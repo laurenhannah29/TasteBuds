@@ -3,6 +3,7 @@ requests
 Flask
 flask_sqlalchemy
 flask_login
+flask_mail
 SQLAlchemy
 psycopg2
 boto3
