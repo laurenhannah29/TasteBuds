@@ -45,7 +45,6 @@ def load_saved():
 @saved.route("/save_post", methods=["POST"])
 def save_post():
     post_id = request.form["post_id"]
-
     savedPosts = Saved.query.all()
 
     # if post already saved, return

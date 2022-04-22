@@ -12,6 +12,7 @@ def get_profile():
     # profile_info = Rating.query.filter_by(username=current_user.username).all()
 
     profile_info = Users.query.filter_by(id=current_user.id)
+
     return flask.jsonify(
         [
             {
