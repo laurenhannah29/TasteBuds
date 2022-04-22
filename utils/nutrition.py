@@ -20,22 +20,25 @@ nutrition = Blueprint("nutrition", __name__)
 
 @nutrition.route("/nutrition", methods=["POST"])
 def get_nutrition_facts(fdcID):
+    item = request.form["search"]
+
     response = requests.get(
-        f"https://api.nal.usda.gov/fdc/v1/food/{fdcID}",
+        f"https://trackapi.nutritionix.com/v2/search/instant?query=${item}",
         params={
             "api_key": os.getenv("Nutrition_Key"),
         },
     )
+
     json_response = response.json()
-    name = json_response["name"]
-    amount = json_response["amount"]
-    unitName = json_response["unitName"]
-    derivationDescription = json_response["derivationDescription"]
+    food_name = json_response["food_name"]
+    serving_unit = json_response["serving_unit"]
+    nf_calories = json_response["nf_calories"]
+    image = json_response["image"]
 
     return flask.render_template(
-        "nutrition.html",
-        name=name,
-        amount=amount,
-        unitName=unitName,
-        derivationDescription=derivationDescription,
+        "index.html",
+        food_name=food_name,
+        serving_unit=serving_unit,
+        nf_calories=nf_calories,
+        image=image,
     )

@@ -2,7 +2,7 @@ body {
   text-align: center;
   color: whitesmoke;
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #323439;
+  background-color: #73a5c6;
 }
 
 .App-logo {
@@ -17,7 +17,7 @@ body {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #73a5c6;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -72,4 +72,10 @@ img {
   font-size: 50px;
   font-family: Yeseva One;
   color: #feca1d;
+  font-weight: bold;
+}
+
+.comment {
+  font-size: 30px;
+  font-weight: bolder;
 }

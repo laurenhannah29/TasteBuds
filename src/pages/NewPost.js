@@ -57,7 +57,7 @@ class NewPost extends Component {
 
         // redirect to home page if fetch returns true
         if (success) {
-            window.location.replace("/");
+            window.location.replace("/home");
         }
         else {
             alert("Error saving post!");
@@ -122,6 +122,7 @@ class NewPost extends Component {
                                         type="text"
                                         value={this.state.title}
                                         onChange={this.onTitleChange}
+                                        placeholder="title"
                                     // required
                                     />
                                 </div>
