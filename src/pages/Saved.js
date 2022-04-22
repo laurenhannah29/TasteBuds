@@ -32,9 +32,9 @@ const Saved = () => {
                 {saves.map((saved) => renderSaved(saved))}
             </div>
 
-            <form method="POST" action="/upload">
+            {/* <form method="POST" action="/upload">
                 <button type="submit">Upload</button>
-            </form>
+            </form> */}
         </div>
 
     );

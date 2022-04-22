@@ -48,16 +48,12 @@ def save_post():
 
     savedPosts = Saved.query.all()
 
-    # if post already saved, return 
+    # if post already saved, return
     for post in savedPosts:
         if post.user_id == current_user.id and post.post_id == post_id:
             return redirect(url_for("bp.index"))
 
-
-    new_saved = Saved(
-        post_id=post_id,
-        user_id= current_user.id
-    )
+    new_saved = Saved(post_id=post_id, user_id=current_user.id)
 
     db.session.add(new_saved)
     db.session.commit()

@@ -22,6 +22,7 @@ function EditProfile() {
     setVal(newProfile);
   }
   function onClickSave() {
+    javascript: alert('Profile Updatd');
     fetch('/save_profile', {
       method: 'POST',
       headers: {

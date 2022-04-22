@@ -41,6 +41,7 @@ const Home = () => {
         const formData = new FormData();
         formData.append("post_id", e.target.value);
         console.log(e.target.value);
+        javascript: alert('Post Saved');
         fetch("/save_post", {
             method: "POST",
             body: formData
