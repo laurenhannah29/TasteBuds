@@ -41,6 +41,7 @@ const Home = () => {
         const formData = new FormData();
         formData.append("post_id", e.target.value);
         console.log(e.target.value);
+        javascript: alert('Post Saved');
         fetch("/save_post", {
             method: "POST",
             body: formData
@@ -82,10 +83,10 @@ const Home = () => {
                     <p>{post["caption"]}</p>
                     <SaveButton value={post["id"]} onClick={onClickSave} />
 
-                    See what others said! <p>{itemRows}</p>
+                    <div class="com"> See what others said! </div> <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
                         <input type="hidden" name="post_id" value={post["id"]} />
-                        <input type="text" name="comment" placeholder="Leave a comment" />
+                        <input type="text" id="textboxid" name="comment" placeholder="Leave a comment" />
                         <input type="submit" value="Submit" />
                     </form>
                 </div>
@@ -101,11 +102,11 @@ const Home = () => {
                     <p>Caption: {post["caption"]}</p>
                     <SaveButton value={post["id"]} onClick={onClickSave} />
 
-                    <div class="comment"> See what others said! </div>
+                    <div class="com"> See what others said! </div>
                     <p>{itemRows}</p>
                     <form method="POST" action="/upload_comment">
                         <input type="hidden" name="post_id" value={post["id"]} />
-                        <input type="text" name="comment" placeholder="Leave a comment" />
+                        <input type="text" id="textboxid" name="comment" placeholder="Leave a comment" />
                         <input type="submit" value="Submit" />
                     </form>
                 </div>
