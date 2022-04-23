@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, url_for, request
-from flask_sqlalchemy import SQLAlchemy
+
+# from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import (
@@ -10,8 +11,8 @@ from flask_login import (
 from flask_mail import Mail, Message
 from itsdangerous import URLSafeTimedSerializer, SignatureExpired
 
+# pylint: disable=import-error
 from utils.models import db, Users
-from utils.models import db
 
 
 auth = Blueprint("auth", __name__)
@@ -19,6 +20,7 @@ auth = Blueprint("auth", __name__)
 mail = Mail()
 
 s = URLSafeTimedSerializer("Thisisasecret!")
+
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
@@ -50,7 +52,11 @@ def login():
 
 
 @auth.route("/signup", methods=["GET", "POST"])
-def signup():  # user can create a username and password and then login to the website
+def signup():
+    """
+    user can create a username and password and then login to the website
+
+    """
     if request.method == "POST":
         username = request.form.get("username")
         password = request.form.get("password")
@@ -63,7 +69,9 @@ def signup():  # user can create a username and password and then login to the w
 
         link = url_for("auth.confirm_email", token=token, _external=True)
 
-        msg.body = "Your link is {}".format(link)
+        # (Line is changed for pylint error)
+        # msg.body = "Your link is {}".format(link)
+        msg.body = f"Your link is {link}"
 
         mail.send(msg)
 
@@ -75,6 +83,7 @@ def signup():  # user can create a username and password and then login to the w
             password_hash = generate_password_hash(password, method="sha256")
             user = Users(username=username, password=password_hash, email=email)
             # db.session.begin()
+
             db.session.add(user)
             db.session.commit()
             # return '<h1>The email you entered is {}. The token is {}</h1>'.format(email, token)
@@ -84,6 +93,7 @@ def signup():  # user can create a username and password and then login to the w
             "login.html", is_login_page=False, user_exists=user_exists
         )
     return render_template("login.html", is_login_page=False)
+
 
 @auth.route("/confirm_email/<token>")
 def confirm_email(token):

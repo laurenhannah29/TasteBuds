@@ -1,25 +1,37 @@
+"""
+comment.py
+"""
+import flask
+
+# pylint: disable=unused-import
 from flask import Blueprint, request, redirect, url_for, jsonify
 from flask_login import (
     login_required,
     current_user,
 )
+
+# pylint: disable=import-error
 from utils.models import db, Users, Comment
-import flask
 
 comment = Blueprint("comment", __name__)
 
 
 @comment.route("/upload_comment", methods=["POST", "GET"])
 def upload_comment():
+    """
+    Upload Comments
+    """
 
     data = flask.request.form
-    comment = data.get("comment")
+    # pylint: disable=no-member
+    # no error
+    comment1 = data.get("comment")
     post_id = data.get("post_id")
 
     new_comment = Comment(
         user_id=current_user.id,
         post_id=post_id,
-        comment=comment,
+        comment1=comment1,
     )
 
     db.session.add(new_comment)

@@ -1,16 +1,28 @@
-import flask
+"""
+nutrition.py
+"""
+import os
+
+# pylint: disable=unused-import
+import json
+
+# pylint: disable=unused-import
 from unicodedata import name
+import flask
+
+# pylint: disable=unused-import
 from flask import Blueprint, request, redirect, url_for, flash, render_template, jsonify
 from flask_login import (
     login_user,
     login_required,
     logout_user,
 )
-from utils.models import db, Posts
-import json
-import requests
-import os
 from dotenv import load_dotenv, find_dotenv
+import requests
+
+# pylint: disable=import-error
+from utils.models import db, Posts
+
 
 load_dotenv(find_dotenv())
 
