@@ -6,6 +6,9 @@ pip3 install -r requirements.txt
 
 ## Create a .env file in the top-level directory and enter the following as its contents:
 export DATABASE_URL="<YOUR POSTGRESQL DB URL>"
+AWS_ACCESS_KEY_ID= "<YOUR AWS ACCESS KEY ID>"
+AWS_SECRET_ACCESS_KEY= "<YOUR AWS ACCESS KEY>"
+SECRET_KEY="<YOUR SECRET KEY>"
 
 # To run the app
 Run python3 app.py
