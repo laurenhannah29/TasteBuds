@@ -1,10 +1,8 @@
-// import logo from './logo.svg';
-// import './App.css';
 import { useState, useEffect } from 'react';
 import { Profile } from '../components/Profile.js';
 
 function EditProfile() {
-  const [val, setVal] = useState([])
+  const [val, setVal] = useState([]);
 
   function handlePhotoChange(i, e) {
     const newProfile = val.slice();
@@ -22,7 +20,7 @@ function EditProfile() {
     setVal(newProfile);
   }
   function onClickSave() {
-    javascript: alert('Profile Updatd');
+    alert('Profile Updatd');
     fetch('/save_profile', {
       method: 'POST',
       headers: {
@@ -41,24 +39,26 @@ function EditProfile() {
   //   }
 
   const profile = val.map(
-    (profile, i) => <Profile
-      photo={profile.photo}
-      profile_name={profile.profile_name}
-      bio={profile.bio}
+    (profile, i) => (
+      <Profile
+        photo={profile.photo}
+        profile_name={profile.profile_name}
+        bio={profile.bio}
 
-      // onDelete={() => handleDelete(i)}
-      onPhoto={(e) => handlePhotoChange(i, e)}
-      onName={(e) => handleNameChange(i, e)}
-      onBio={(e) => handleBioChange(i, e)}
-
-    />);
+        // onDelete={() => handleDelete(i)}
+        onPhoto={(e) => handlePhotoChange(i, e)}
+        onName={(e) => handleNameChange(i, e)}
+        onBio={(e) => handleBioChange(i, e)}
+      />
+    ),
+  );
 
   useEffect(() => {
     fetch('/get_profile', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -66,9 +66,7 @@ function EditProfile() {
       });
   }, []);
 
-
-
-  console.log("WE PROFILING")
+  console.log('WE PROFILING');
   console.log(val);
   return (
     <div className="App">

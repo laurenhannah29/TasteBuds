@@ -1,7 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import React from 'react';
+import {
+  render, screen, test, expect,
+}
+  from '@testing-library/react';
 import App from './App';
-import EditProfile from './EditProfile';
-import Profile from './Profile';
+import EditProfile from './pages/EditProfile';
 
 test('renders learn react link', () => {
   render(<App />);
@@ -20,4 +23,3 @@ test('renders save button being on page', () => {
   const linkElement = screen.getByText(/Save/i);
   expect(linkElement).toBeInTheDocument();
 });
-
