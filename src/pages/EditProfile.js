@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Profile } from '../components/Profile.js';
 
 function EditProfile() {
